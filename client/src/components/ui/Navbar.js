@@ -25,7 +25,7 @@ class Navigation extends Component {
 
             this.props.loggedInUser ?
 
-                <Navbar bg="dark" variant="dark" expand="md">
+                <Navbar className="fixed-top" bg="dark" variant="dark" expand="md">
                     <Navbar.Brand>Moviestorm</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse>
@@ -43,7 +43,7 @@ class Navigation extends Component {
 
                 :
 
-                <Navbar bg="dark" variant="dark" expand="md">
+                <Navbar className="fixed-top" bg="dark" variant="dark" expand="md">
                     <Navbar.Brand><img src="../../public/images/Logo-blanco.png" alt="Logo" /></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse>

@@ -11,7 +11,8 @@ require('./configs/session.config')(app)
 require('./configs/view-engine.config')(app)
 
 
-app.use('/', require('./routes/auth.routes'))
-app.use('/movies', require('./routes/movies.routes'))
+app.use('/api/auth', require('./routes/auth.routes'))
+app.use('/api/movies', require('./routes/movies.routes'))
+app.use('/api/lists', require('./routes/list.routes'))
 
 module.exports = app

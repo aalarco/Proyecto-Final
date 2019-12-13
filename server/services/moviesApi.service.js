@@ -18,4 +18,3 @@ class APIHandler {
 
 module.exports = APIHandler;
 
-`https://api.themoviedb.org/3`

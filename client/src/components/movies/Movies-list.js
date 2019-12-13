@@ -4,7 +4,7 @@ import { Container, Row } from 'react-bootstrap'
 
 import MovieCard from './Movie-card'
 
-class MovieList extends Component {
+class AllMovies extends Component {
 
     constructor(props) {
         super(props)
@@ -46,4 +46,4 @@ class MovieList extends Component {
 
 }
 
-export default MovieList
+export default AllMovies

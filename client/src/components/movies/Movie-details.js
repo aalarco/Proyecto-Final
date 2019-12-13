@@ -1,50 +1,45 @@
 import React, { Component } from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Button, Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 /* API Services */
-
-
 import Service from '../../service/Movie.service'
 import ServiceApi from '../../service/Api.service'
 
+/* Crear lista */
+import NewList from '../lists/New-list'
 
-class MovieDetails extends Component{
+class MovieDetails extends Component {
 
-    constructor(){
+    constructor() {
         super()
         this._service = new Service()
         this._serviceApi = new ServiceApi()
-        this.state = { 
-            Title: this.Title,
-            TMDB: this.TMDB,
+        this.state = {
+            movie: null,
             poster: null,
-            trailer_url: this.trailer_url,
-            Calification: this.Calification,
-            Duration: this.Duration,
-            Genre1: this.Genre1,
-            SubGenre1: this.SubGenre1,
-            Theme1: this.Theme1,
-            Mood1: this.Mood1,
-            Stream1: this.Stream1
-
-
-         }
-
-
+            ////
+            showModalWindow: false
+            ////
+        }
     }
 
-    componentDidMount = () => {
-        const TMDB = this.props.TMDB
-        this._service.getOneMovie(TMDB)
-            .then(theMovie => console.log(theMovie))
-            .catch(err => console.log(err))
-        this.apiInfo()
 
+    componentDidMount = () => {
+        const movieId = this.props.match.params.id
+    
+        this._service.getOneMovie(movieId)
+            .then(theMovie => {
+                this.setState({ movie: theMovie.data }, () => {
+                    console.log(this.state.movie)
+                    this.apiInfo()
+                })
+            })
+            .catch(err => console.log(err))
     }
 
     apiInfo = () => {
-        this._serviceApi.getMovieByID(this.state.TMDB)
+        this._serviceApi.getMovieByID(this.state.movie.TMDB)
             .then(res => {
                 this.setState({ poster: res.data.poster_path })
                 //console.log(res.data.poster_path)
@@ -52,33 +47,61 @@ class MovieDetails extends Component{
             .catch(err => console.log(err))
     }
 
+    movieInfo = () => {
+        this._service.getMovieByID(this.state._id)
+            .then(res => {
+
+            })
+    }
+    
+    /////
+    handleShow = () => this.setState({ showModalWindow: true })
+    handleClose = () => this.setState({ showModalWindow: false })
+    /////
 
     render() {
 
         const imgSrc = `http://image.tmdb.org/t/p/w185/${this.state.poster}`
+        const movieIdParams = this.props.match.params.id
 
-        return (
+        return this.state.movie ? (
             <Container className="movie-details">
                 <section>
                     <Row>
                         <Col>
                             <img src={imgSrc} alt="Movie poster"></img>
+                            <Link href={this.state.movie.Trailer_url} className="btn btn-dark">Ver trailer</Link>
+                            {
+                                <Button variant="dark" onClick={this.handleShow}>Add to list</Button> ///// Añadir  this.props.loggedInUser &&  al principio del botón
+                            }
                         </Col>
 
                         <Col md={6}>
-                            <h1>{this.state.Title}</h1>
-                            <p><strong>Genres:</strong> {this.state.Genre1}</p>
-                            <p><strong>SubGenre:</strong> {this.state.SubGenre1}</p>
-                            <p><strong>Theme:</strong> {this.state.Theme1}</p>
-                            <p><strong>Mood:</strong> {this.state.Mood1}</p>
-                            <p><strong>Stream:</strong> {this.state.Stream1}</p>
+                            <h1>{this.state.movie.Title}</h1>
+                            <p><strong>Genres:</strong> {this.state.movie.Genre1}</p>
+                            <p><strong>SubGenre:</strong> {this.state.movie.SubGenre1}, {this.state.movie.SubGenre2}</p>
+                            <p><strong>Theme:</strong> {this.state.movie.Theme1}, {this.state.movie.Theme2}, {this.state.movie.Theme3}, {this.state.movie.Theme4}, {this.state.movie.Theme5}, </p>
+                            <p><strong>Mood:</strong> {this.state.movie.Mood1}</p>
+                            <p><strong>Stream:</strong> {this.state.movie.Stream1}</p>
                             <Link to="/" className="btn btn-dark">Volver</Link>
                         </Col>
-                        
+
                     </Row>
+
+                    <Modal show={this.state.showModalWindow} onHide={this.handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Add to list</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <NewList closeModalWindow={this.handleClose} idMovie={movieIdParams} />
+                        </Modal.Body>
+                    </Modal>
+
                 </section>
             </Container>
-        )
+
+            
+        ) : "Waiting for the movie"
     }
 }
 

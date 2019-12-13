@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+
 const Movie = require('../models/movie.model')
 
 
@@ -13,7 +14,6 @@ router.get('/getAllMovies', (req, res) => {
     Movie.find()
         .then(allMovies => res.json(allMovies))
         .catch(err => console.log('DB error', err))
-
 })
 
 router.get('/:id', (req, res) => {
@@ -22,6 +22,7 @@ router.get('/:id', (req, res) => {
         .then(theMovie => res.json(theMovie))
         .catch(err => console.log('DB error', err))
 })
+
 
 
 

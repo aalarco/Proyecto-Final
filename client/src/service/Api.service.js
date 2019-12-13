@@ -5,8 +5,7 @@ export default class APIHandler {
 
     constructor() {
         this._service = axios.create({
-            baseURL: `https://api.themoviedb.org/3`,
-            withCredentials: false   // RUTAS PERSISTENTES
+            baseURL: `https://api.themoviedb.org/3`
         })
     }
 

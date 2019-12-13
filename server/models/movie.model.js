@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const movieSchema = new Schema({
-    
+
     TMDB: String,
     Title: String,
     Type: String,
@@ -56,9 +56,12 @@ const movieSchema = new Schema({
     Rent4: String,
     Rent5: String,
 
-}, {timestamps: 
-        {createdAt: 'created_at', 
-        updatedAt: 'updated_at'}
+}, {
+    timestamps:
+    {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
+    }
     });
 
 const Movie = mongoose.model('Movie', movieSchema);
