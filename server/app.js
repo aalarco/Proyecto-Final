@@ -14,5 +14,8 @@ require('./configs/view-engine.config')(app)
 app.use('/api/auth', require('./routes/auth.routes'))
 app.use('/api/movies', require('./routes/movies.routes'))
 app.use('/api/lists', require('./routes/list.routes'))
+app.use((req, res) => { res.senfFile(__dirname + "/public/index.html")})
+
+
 
 module.exports = app
