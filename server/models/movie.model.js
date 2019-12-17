@@ -57,12 +57,8 @@ const movieSchema = new Schema({
     Rent5: String,
 
 }, {
-    timestamps:
-    {
-        createdAt: 'created_at',
-        updatedAt: 'updated_at'
-    }
-    });
+    timestamps: true
+})
 
 const Movie = mongoose.model('Movie', movieSchema);
 module.exports = Movie;

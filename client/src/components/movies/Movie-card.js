@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom'
 
 /* API Services */
 
-import ServiceApi from '../../service/Api.service'
+import ApiService from '../../service/Api.service'
  
 class MovieCard extends Component{
 
     constructor(props){
         super(props)
-        this._serviceApi = new ServiceApi()
+        this._apiService = new ApiService()
         this.state = {
             id: this.props._id,
             TMDB: this.props.TMDB,
@@ -26,7 +26,7 @@ class MovieCard extends Component{
     }
 
     apiInfo = () => {
-        this._serviceApi.getMovieByID(this.state.TMDB)
+        this._apiService.getMovieByID(this.state.TMDB)
             .then(res => {
                 this.setState({ poster: res.data.poster_path })
                 //console.log(res.data.poster_path)   --------------------------

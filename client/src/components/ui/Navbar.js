@@ -31,7 +31,7 @@ class Navigation extends Component {
                     <Navbar.Collapse>
                         <Nav className="mr-auto">
                             <Nav.Link as="li"><Link to="/">Inicio</Link></Nav.Link>
-                            <Nav.Link as="li"><Link to="/movies">Listas</Link></Nav.Link>
+                            <Nav.Link as="li"><Link to="/lists">Listas</Link></Nav.Link>
                             <Nav.Link as="li"><Link to="/profile">Perfil</Link></Nav.Link>
                         </Nav>
                         <Nav className="ml-auto">

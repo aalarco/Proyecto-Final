@@ -7,7 +7,7 @@ import './App.css'
 
 
 /* services */
-import Service from './service/Auth.service'
+import AuthService from './service/Auth.service'
 
 /* UI */
 import Navbar from './components/ui/Navbar'
@@ -25,13 +25,17 @@ import Login from './components/auth/Login'
 import AllMovies from './components/movies/Movies-list'
 import MovieDetails from './components/movies/Movie-details'
 
+/* Lists */
+
+import AllLists from './components/lists/All-lists'
+
 
 
 class App extends Component {
   constructor() {
     super()
     this.state = { loggedInUser: null }
-    this._service = new Service()
+    this._service = new AuthService()
   }
 
   setTheUser = user => {
@@ -39,13 +43,12 @@ class App extends Component {
   }
 
   fetchUser = () => {
-    console.log(this.state.loggedInUser)
     if (this.state.loggedInUser === null) {
       this._service.loggedin()
         .then(theLoggedInUserFromTheServer => this.setState({ loggedInUser: theLoggedInUserFromTheServer.data }))
         .catch(err => {
           this.setState({ loggedInUser: false })
-          console.log({ err })
+          console.log('Ha habido un error en fecthUser()', { err })
         })
     }
   }
@@ -63,8 +66,8 @@ class App extends Component {
           <Route exact path="/" component={Index} />
 
           <Route exact path="/movies" render={() => <AllMovies loggedInUser={this.state.loggedInUser} />} />
-          <Route path="/movies/:id" component={MovieDetails} />
-          {/* <Route path="/lists" component={CoasterForm} />  */}
+          <Route path="/movies/:id" render={match => <MovieDetails loggedInUser={this.state.loggedInUser} {...match} />} />
+          <Route path="/lists" component={AllLists} /> 
 
           <Route path="/signup" render={match => <Signup setUser={this.setTheUser} {...match} />} />
           <Route path="/login" render={match => <Login setUser={this.setTheUser} {...match} />} />

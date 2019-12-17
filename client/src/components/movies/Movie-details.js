@@ -1,63 +1,80 @@
 import React, { Component } from 'react'
-import { Container, Row, Col, Button, Modal } from 'react-bootstrap'
+import { Container, Row, Col, Button, Modal, Dropdown, DropdownButton } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 /* API Services */
-import Service from '../../service/Movie.service'
-import ServiceApi from '../../service/Api.service'
+import MovieService from '../../service/Movie.service'
+import ApiService from '../../service/Api.service'
+import ListService from '../../service/List.service'
 
 /* Crear lista */
 import NewList from '../lists/New-list'
 
 class MovieDetails extends Component {
 
-    constructor() {
-        super()
-        this._service = new Service()
-        this._serviceApi = new ServiceApi()
+    constructor(props) {
+        super(props)
+        this._movieService = new MovieService()
+        this._apiService = new ApiService()
+        this._listService = new ListService()
         this.state = {
             movie: null,
             poster: null,
             ////
-            showModalWindow: false
+            showModalWindowCreate: false,
+            showModalWindowAdd: false,
             ////
+            loggedInUser: null,
+            list: {},
+            user: {}
         }
     }
 
 
     componentDidMount = () => {
+        console.log('el usuarioi es::::: ',this.props.loggedInUser)
+
         const movieId = this.props.match.params.id
-    
-        this._service.getOneMovie(movieId)
+
+        this._movieService.getOneMovie(movieId)
             .then(theMovie => {
                 this.setState({ movie: theMovie.data }, () => {
-                    console.log(this.state.movie)
                     this.apiInfo()
                 })
             })
+            .then(()=> this._listService.getAllListsFromUser(this.props.loggedInUser._id))
             .catch(err => console.log(err))
     }
 
     apiInfo = () => {
-        this._serviceApi.getMovieByID(this.state.movie.TMDB)
+        this._apiService.getMovieByID(this.state.movie.TMDB)
             .then(res => {
                 this.setState({ poster: res.data.poster_path })
-                //console.log(res.data.poster_path)
             })
             .catch(err => console.log(err))
     }
 
-    movieInfo = () => {
-        this._service.getMovieByID(this.state._id)
-            .then(res => {
+    // movieInfo = () => {
+    //     this._movieService.getMovieByID(this.state._id)
+    //         .then(res => {
 
-            })
+    //         })
+    // }
+
+    ///// Create list
+    handleShowCreate = () => this.setState({ showModalWindowCreate: true })
+    handleCloseCreate = () => this.setState({ showModalWindowCreate: false })
+
+    // /// Add list
+    // handleShowAdd = () => this.setState({ showModalWindowAdd: true })
+    // handleCloseAdd = () => this.setState({ showModalWindowAdd: false })
+
+    /// Add to existent list
+    handleAddToExistentList = e => {
+        const listId = e.target.dataset.value
+        console.log(listId)
+
     }
-    
-    /////
-    handleShow = () => this.setState({ showModalWindow: true })
-    handleClose = () => this.setState({ showModalWindow: false })
-    /////
 
     render() {
 
@@ -70,10 +87,21 @@ class MovieDetails extends Component {
                     <Row>
                         <Col>
                             <img src={imgSrc} alt="Movie poster"></img>
-                            <Link href={this.state.movie.Trailer_url} className="btn btn-dark">Ver trailer</Link>
+                            {/*<Link to={this.state.movie.Trailer_url} className="btn btn-dark">Ver trailer</Link>*/}
                             {
-                                <Button variant="dark" onClick={this.handleShow}>Add to list</Button> ///// Añadir  this.props.loggedInUser &&  al principio del botón
+                                this.props.loggedInUser &&
+                                <Button variant="dark" onClick={this.handleShowCreate}>Create and add to list</Button>  ///// Añadir  this.props.loggedInUser &&  al principio del botón
                             }
+
+
+                            {
+                                //<AddToList />                                 
+                                this.props.loggedInUser &&
+                                <DropdownButton variant="dark" id="dropdown-basic-button" title="Add to list">
+                                    <Dropdown.Item onClick={this.handleAddToExistentList} data-value={this.state.user.lists}>Lista 1</Dropdown.Item>
+                                </DropdownButton>
+                            }
+
                         </Col>
 
                         <Col md={6}>
@@ -88,19 +116,19 @@ class MovieDetails extends Component {
 
                     </Row>
 
-                    <Modal show={this.state.showModalWindow} onHide={this.handleClose}>
+                    <Modal show={this.state.showModalWindowCreate} onHide={this.handleCloseCreate}>
                         <Modal.Header closeButton>
-                            <Modal.Title>Add to list</Modal.Title>
+                            <Modal.Title>Create and add to list</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <NewList closeModalWindow={this.handleClose} idMovie={movieIdParams} />
+                            <NewList closeModalWindow={this.handleCloseCreate} idMovie={movieIdParams} />
                         </Modal.Body>
                     </Modal>
 
                 </section>
             </Container>
 
-            
+
         ) : "Waiting for the movie"
     }
 }

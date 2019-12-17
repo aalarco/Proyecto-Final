@@ -11,11 +11,13 @@ class NewList extends Component {
         this.state = {
             list:{
                 listName:"",
-                // creator: this.props.idUser,
+                creator: this.props.idUser,
                 movies: [this.props.idMovie]
             }
         }
     }
+
+    
 
     handleSubmit = e => {
         e.preventDefault()
@@ -23,7 +25,7 @@ class NewList extends Component {
         const listNew = this.state.list
         this._ServiceList.createList(listNew)
             .then(x => {
-                console.log("respuesta back ok")
+                ///console.log("respuesta back ok")
                 this.props.closeModalWindow()
             })
             .catch(err => console.log(err))
@@ -37,12 +39,12 @@ class NewList extends Component {
     }
 
     render() {
-        console.log("soy el estado del newlist", this.state.list)
+        ///console.log("soy el estado del newlist", this.state.list)
         return (
             <>
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group>
-                        <Form.Label>List Name:</Form.Label>
+                        <Form.Label>Create a new list:</Form.Label>
                         <Form.Control type="text" name="listName" id="listName" onChange={this.handleInputChange} value={this.state.list.listName} />
                     </Form.Group>
                     <Button variant="dark" size="sm" type="submit" disabled={this.state.disabledButton}> Create and Add</Button>
