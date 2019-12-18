@@ -25,14 +25,15 @@ class MovieDetails extends Component {
             showModalWindowAdd: false,
             ////
             loggedInUser: null,
-            list: {},
-            user: {}
+            list: [],
+            user: { lists: [] },
+
+
         }
     }
 
 
     componentDidMount = () => {
-        console.log('el usuarioi es::::: ',this.props.loggedInUser)
 
         const movieId = this.props.match.params.id
 
@@ -42,8 +43,14 @@ class MovieDetails extends Component {
                     this.apiInfo()
                 })
             })
-            .then(()=> this._listService.getAllListsFromUser(this.props.loggedInUser._id))
+            .then(() => this._listService.getAllListsFromUser(this.props.loggedInUser._id))
+            .then(allTheListsFromTheUser => {
+                this.setState({ list: allTheListsFromTheUser.data })
+                //console.log('Todas las listas son:', this.state.list[0].listName)
+            })
+
             .catch(err => console.log(err))
+
     }
 
     apiInfo = () => {
@@ -54,27 +61,36 @@ class MovieDetails extends Component {
             .catch(err => console.log(err))
     }
 
-    // movieInfo = () => {
-    //     this._movieService.getMovieByID(this.state._id)
-    //         .then(res => {
 
-    //         })
-    // }
 
     ///// Create list
     handleShowCreate = () => this.setState({ showModalWindowCreate: true })
     handleCloseCreate = () => this.setState({ showModalWindowCreate: false })
 
-    // /// Add list
-    // handleShowAdd = () => this.setState({ showModalWindowAdd: true })
-    // handleCloseAdd = () => this.setState({ showModalWindowAdd: false })
 
     /// Add to existent list
     handleAddToExistentList = e => {
-        const listId = e.target.dataset.value
-        console.log(listId)
+        const selectedList = e.target.dataset.listid
+        const movieId = this.props.match.params.id
+        //const selectedList = this.state.list._id
+
+        console.log("Aqui esta la lista del usuario", selectedList, "Aqui la pelicula seleccionada", movieId)
+
+        this._listService.addMovieToList(movieId, selectedList)
+            .then(addedMovie => console.log(addedMovie))
+            .catch(err => console.log(err))
 
     }
+
+    // addMovieToList = (movieId) => {
+    //     let movieCopy = [...this.props.match.params.id]
+    // }
+
+
+
+
+
+
 
     render() {
 
@@ -98,7 +114,7 @@ class MovieDetails extends Component {
                                 //<AddToList />                                 
                                 this.props.loggedInUser &&
                                 <DropdownButton variant="dark" id="dropdown-basic-button" title="Add to list">
-                                    <Dropdown.Item onClick={this.handleAddToExistentList} data-value={this.state.user.lists}>Lista 1</Dropdown.Item>
+                                    {this.state.list.map(list => <Dropdown.Item data-listid={list._id} onClick={this.handleAddToExistentList}>{list.listName}</Dropdown.Item >)}
                                 </DropdownButton>
                             }
 
@@ -132,5 +148,6 @@ class MovieDetails extends Component {
         ) : "Waiting for the movie"
     }
 }
+
 
 export default MovieDetails

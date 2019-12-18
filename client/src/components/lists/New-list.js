@@ -13,7 +13,8 @@ class NewList extends Component {
                 listName:"",
                 creator: this.props.idUser,
                 movies: [this.props.idMovie]
-            }
+            },
+            user:{}
         }
     }
 

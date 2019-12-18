@@ -51,11 +51,11 @@ class LoginForm extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group>
                         <Form.Label>Usuario</Form.Label>
-                        <Form.Control type="text" name="username" onChange={this.handleInputChange} value={this.state.username} />
+                        <Form.Control type="text" name="username" onChange={this.handleInputChange} value={this.state.user.username} />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Contraseña</Form.Label>
-                        <Form.Control type="password" name="password" onChange={this.handleInputChange} value={this.state.password} />
+                        <Form.Control type="password" name="password" onChange={this.handleInputChange} value={this.state.user.password} />
                     </Form.Group>
                     <Button variant="dark" type="submit">Iniciar sesión</Button>
                 </Form>

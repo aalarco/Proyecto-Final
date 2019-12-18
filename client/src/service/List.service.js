@@ -10,7 +10,8 @@ export default class Services {
     }
 
     createList = (movielist) => this._service.post('/newList', { movielist })
-    addMovieToList = (addMovieToList) => this._service.post('/addMovieToList', { addMovieToList })
+    //addMovieToList = (addMovieToList) => this._service.post('/addMovieToList', { addMovieToList })
     getAllLists = () => this._service.get('/getAllLists')
     getAllListsFromUser = (userId) => this._service.get(`/getAllListsFromUser/${userId}`)
+    addMovieToList = (movieId, listId) => this._service.post(`/addMovieToList`, {movieId, listId})
 }

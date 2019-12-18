@@ -29,6 +29,10 @@ import MovieDetails from './components/movies/Movie-details'
 
 import AllLists from './components/lists/All-lists'
 
+/* Profile */
+
+import Profile from './components/profile/profile-view'
+
 
 
 class App extends Component {
@@ -73,9 +77,9 @@ class App extends Component {
           <Route path="/login" render={match => <Login setUser={this.setTheUser} {...match} />} />
 
 
-          {/* <Route path="/profile" render={() =>
+          <Route path="/profile" render={() =>
             this.state.loggedInUser ? <Profile loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />
-          } /> */}
+          } />
         </Switch>
 
       </>

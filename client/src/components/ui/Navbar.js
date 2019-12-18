@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { Navbar, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import Service from '../../service/Auth.service'
+import AuthService from '../../service/Auth.service'
 
 class Navigation extends Component {
 
     constructor(props) {
         super(props)
-        this._service = new Service()
+        this._service = new AuthService()
 
     }
 
@@ -35,7 +35,7 @@ class Navigation extends Component {
                             <Nav.Link as="li"><Link to="/profile">Perfil</Link></Nav.Link>
                         </Nav>
                         <Nav className="ml-auto">
-                            <Navbar.Text>Bienvenid@ {saludo}</Navbar.Text>
+                            <Navbar.Text>{saludo}</Navbar.Text>
                             <Nav.Link as="li" onClick={this.logoutUser}>Logout</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
