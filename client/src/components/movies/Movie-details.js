@@ -119,12 +119,12 @@ class MovieDetails extends Component {
 
                         <Col md={6}>
                             <h1>{this.state.movie.Title}</h1>
+                            <p><strong>Calification:</strong> {this.state.movie.Calification}</p>
+                            <p><strong>Duration:</strong> {this.state.movie.Duration}</p>
                             <p><strong>Genres:</strong> {this.state.movie.Genre1}</p>
                             <p><strong>SubGenre:</strong> {this.state.movie.SubGenre1}, {this.state.movie.SubGenre2}</p>
-                            <p><strong>Theme:</strong> {this.state.movie.Theme1}, {this.state.movie.Theme2}, {this.state.movie.Theme3}, {this.state.movie.Theme4}, {this.state.movie.Theme5}, </p>
                             <p><strong>Mood:</strong> {this.state.movie.Mood1}</p>
-                            <p><strong>Stream:</strong> {this.state.movie.Stream1}</p>
-                            <Link to="/" className="btn btn-dark">Volver</Link>
+                            <Link to="/" className="btn btn-dark"> Volver</Link>
                         </Col>
 
                     </Row>

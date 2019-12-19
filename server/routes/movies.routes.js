@@ -12,6 +12,7 @@ const Movie = require('../models/movie.model')
 
 router.get('/getAllMovies', (req, res) => {
     Movie.find()
+        .limit(100)
         .then(allMovies => res.json(allMovies))
         .catch(err => console.log('DB error', err))
 })
@@ -23,6 +24,34 @@ router.get('/:id', (req, res) => {
         .catch(err => console.log('DB error', err))
 })
 
+router.post('/getMoviesByGenre', (req, res) => {
+    const { genre } = req.body
+    console.log(genre)
+    Movie.find({
+        $or: [
+            { 'Genre1': genre },
+            { 'Genre2': genre },
+            { 'Genre3': genre },
+            { 'Genre4': genre }
+        ]
+    })
+        .then(allMoviesByGenre => res.json(allMoviesByGenre))
+        .catch(err => console.log('DB error', err))
+})
+
+router.post('/getMoviesBySubGenre', (req, res) => {
+    const { subgenre } = req.body
+    Movie.find({
+        $or: [
+            { 'SubGenre1': subgenre },
+            { 'SubGenre2': subgenre },
+            { 'SubGenre3': subgenre },
+            { 'SubGenre4': subgenre }
+        ]
+    })
+        .then(allMoviesBySubGenre => res.json(allMoviesBySubGenre))
+        .catch(err => console.log('DB error', err))
+})
 
 
 

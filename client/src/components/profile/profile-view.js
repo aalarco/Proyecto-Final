@@ -3,7 +3,6 @@ import { Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 
 
-import ProfileService from '../../service/Profile.service'
 import ListService from '../../service/List.service'
 import ApiService from '../../service/Api.service'
 
@@ -13,7 +12,6 @@ class Profile extends Component {
 
     constructor(props) {
         super(props)
-        this._profileService = new ProfileService()
         this._listService = new ListService()
         this._apiService = new ApiService()
         this.state = {
@@ -32,6 +30,8 @@ class Profile extends Component {
         let listsWithPosters = []
         this._listService.getUserLists()
             .then(allListsFromUser => { this.setState({ list: allListsFromUser.data }) })
+        //console.log(allListsFromUser.data)
+
             .then(x => {
                 this.state.list.map(thisList => {
                     thisList.moviesWithPosters = []
@@ -52,6 +52,7 @@ class Profile extends Component {
     }
 
     render() {
+        console.log(this.state.listsWithPosters)
 
         return (
 
@@ -67,7 +68,7 @@ class Profile extends Component {
                         {this.state.listsWithPosters && this.state.listsWithPosters.map(eachList => {
 
                             //const imgSrc = `http://image.tmdb.org/t/p/w185/${eachMovieWithPoster.posterPath}`
-                            const moviesWithPosters = eachList.moviesWithPosters.map(eachMovieWithPoster => <Link to={`movies/${eachMovieWithPoster._id}`}> <img key={eachMovieWithPoster._id} src={`http://image.tmdb.org/t/p/w185/${eachMovieWithPoster.posterPath}`}></img> </Link>)
+                        const moviesWithPosters = eachList.moviesWithPosters.map(eachMovieWithPoster => <Link to={`movies/${eachMovieWithPoster._id}`}> <img key={eachMovieWithPoster._id} src={`http://image.tmdb.org/t/p/w185/${eachMovieWithPoster.posterPath}`}></img> </Link>)
                         const listTitle = eachList.listName
                         return (
                                 <>

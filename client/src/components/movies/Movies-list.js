@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import MovieService from '../../service/Movie.service'
-import { Container, Row } from 'react-bootstrap'
+import { Container, Row, Col, Form } from 'react-bootstrap'
+
+import GenreFilter from '../filters/Genre-filter'
+import SubGenreFilter from '../filters/SubGenre-filter'
 
 import MovieCard from './Movie-card'
 
@@ -23,6 +26,8 @@ class AllMovies extends Component {
             .catch(err => console.log("Error", err))
     }
 
+    filterMovies = moviesFiltered => this.setState({ movies: moviesFiltered })
+
     render() {
         return (
 
@@ -31,7 +36,19 @@ class AllMovies extends Component {
 
                 <Container>
 
+
                     <h1>Movies</h1>
+
+                    <Form>
+                        <Row>
+                            <Col md={4}>
+                                <GenreFilter filterMoviesOnScreen={this.filterMovies} />
+                            </Col>
+                            <Col md={4}>
+                                <SubGenreFilter filterMoviesOnScreen={this.filterMovies} />
+                            </Col>
+                        </Row>
+                    </Form>
 
                     <Row>
                         {this.state.movies.map(movie => (<MovieCard key={movie._id} {...movie} />))}

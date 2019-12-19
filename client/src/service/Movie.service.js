@@ -11,7 +11,8 @@ export default class Services {
 
     getAllMovies = () => this._service.get('/getAllMovies')
     getOneMovie = id => this._service.get(`/${id}`)
+    getMoviesByGenre = genre => this._service.post('/getMoviesByGenre', { genre })
+    getMoviesBySubGenre = subgenre => this._service.post('/getMoviesBySubGenre', {subgenre})
     
-    // getOneMovieByTMDB = x => this._service.get(`/${x}`)
-    // postMovie = movie => this._service.post('/new', movie)
+  
 }

@@ -20,22 +20,11 @@ router.post('/newList', (req, res) => {
 
 router.get('/getAllLists', (req, res) => {
     List.find()
+        .populate('movies')
         .then(allLists => res.json(allLists))
         .catch(err => console.log('DB error', err))
 })
 
-
-
-
-// router.get('/addListToUser', (req, res) => {
-//     const userId = req.user._id
-//     const listId = req.body._id
-
-//     User.findByIdAndUpdate(userId, { $push: { lists: listId } })
-//         .then(addList => { res.json(addList) })
-//         .catch(err => console.log('DB error', err))
-
-// })
 
 router.post('/addMovieToList', (req, res) => {
      const listId = req.body.listId
