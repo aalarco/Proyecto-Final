@@ -42,7 +42,7 @@ router.post('/addMovieToList', (req, res) => {
      const movieId = req.body.movieId
 
 
-    console.log("id de la listaa", listId, "id de la peli", movieId)
+    //console.log("id de la listaa", listId, "id de la peli", movieId)
 
     List.findByIdAndUpdate(listId, { $push: { movies: movieId } })
         .then(addMovie => { res.json(addMovie) })

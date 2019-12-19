@@ -111,7 +111,7 @@ class MovieDetails extends Component {
                                 //<AddToList />                                 
                                 this.props.loggedInUser &&
                                 <DropdownButton variant="dark" id="dropdown-basic-button" title="Add to list">
-                                    {this.state.list.map(list => <Dropdown.Item data-listid={list._id} onClick={this.handleAddToExistentList}>{list.listName}</Dropdown.Item >)}
+                                    {this.state.list.map(list => <Dropdown.Item data-listid={list._id} key={list._id} onClick={this.handleAddToExistentList}>{list.listName}</Dropdown.Item >)}
                                 </DropdownButton>
                             }
 

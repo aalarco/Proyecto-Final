@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Container, Row, Button } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
+
 
 import ProfileService from '../../service/Profile.service'
 import ListService from '../../service/List.service'
@@ -51,7 +53,6 @@ class Profile extends Component {
 
     render() {
 
-        // const imgSrc = `http://image.tmdb.org/t/p/w185/{eachMovieWithPoster.posterPath}`
         return (
 
             < Container className="movie-details" >
@@ -65,9 +66,10 @@ class Profile extends Component {
                     <section>
                         {this.state.listsWithPosters && this.state.listsWithPosters.map(eachList => {
 
-                            const moviesWithPosters = eachList.moviesWithPosters.map(eachMovieWithPoster => <p>{eachMovieWithPoster.Title}</p>)
-                            const listTitle = eachList.listName
-                            return (
+                            //const imgSrc = `http://image.tmdb.org/t/p/w185/${eachMovieWithPoster.posterPath}`
+                            const moviesWithPosters = eachList.moviesWithPosters.map(eachMovieWithPoster => <Link to={`movies/${eachMovieWithPoster._id}`}> <img key={eachMovieWithPoster._id} src={`http://image.tmdb.org/t/p/w185/${eachMovieWithPoster.posterPath}`}></img> </Link>)
+                        const listTitle = eachList.listName
+                        return (
                                 <>
                                     <h1>{listTitle}</h1>
                                     {moviesWithPosters}
