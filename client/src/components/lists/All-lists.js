@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import ListService from '../../service/List.service'
-//import { Container, Row } from 'react-bootstrap'
+import { Container, Row } from 'react-bootstrap'
 
-//import MovieCard from './Movie-card'
+import ListCard from '../lists/list-card'
 
 class AllLists extends Component {
 
@@ -25,23 +25,20 @@ class AllLists extends Component {
 
     render() {
         return (
+            <>
 
-            <h1>Pruebaaaaaaa
-                
-            </h1>
-            // <section>
+            <h1>Pruebaaaaaaa</h1>
 
-            //     <Container>
+            <Container>
+                <section>
+                    <h1>Lists</h1>
+                    <Row>
+                        {this.state.lists.map(list => (<ListCard key={list._id} {...list} />))}
+                    </Row>
 
-            //         <h1>Movies</h1>
-
-            //         <Row>
-            //             {this.state.lists.map(movie => (<MovieCard key={movie._id} {...movie} />))}
-            //         </Row>
-            //     </Container>
-
-            // </section>
-
+                </section>
+            </Container>
+            </>
         )
     }
 

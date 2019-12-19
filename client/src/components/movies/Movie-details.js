@@ -74,7 +74,7 @@ class MovieDetails extends Component {
         const movieId = this.props.match.params.id
         //const selectedList = this.state.list._id
 
-        console.log("Aqui esta la lista del usuario", selectedList, "Aqui la pelicula seleccionada", movieId)
+        //console.log("Aqui esta la lista del usuario", selectedList, "Aqui la pelicula seleccionada", movieId)
 
         this._listService.addMovieToList(movieId, selectedList)
             .then(addedMovie => console.log(addedMovie))
@@ -82,10 +82,7 @@ class MovieDetails extends Component {
 
     }
 
-    // addMovieToList = (movieId) => {
-    //     let movieCopy = [...this.props.match.params.id]
-    // }
-
+    
 
 
 

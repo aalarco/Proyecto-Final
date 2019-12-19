@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-
 /* API Services */
-
 import ApiService from '../../service/Api.service'
  
+
 class MovieCard extends Component{
 
     constructor(props){

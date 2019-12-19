@@ -9,7 +9,7 @@ export default class Services {
         })
     }
 
-    profile = () => this._service.get('/')
+    profile = () => this._service.get('/profile')
     // signup = (username, password) => this._service.post('/signup', { username, password })
     // login = (username, password) => this._service.post('/login', { username, password })
     // logout = () => this._service.post('/logout')

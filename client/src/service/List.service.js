@@ -14,4 +14,5 @@ export default class Services {
     getAllLists = () => this._service.get('/getAllLists')
     getAllListsFromUser = (userId) => this._service.get(`/getAllListsFromUser/${userId}`)
     addMovieToList = (movieId, listId) => this._service.post(`/addMovieToList`, {movieId, listId})
+    getUserLists = () => this._service.get('/getUserLists')
 }

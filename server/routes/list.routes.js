@@ -25,27 +25,17 @@ router.get('/getAllLists', (req, res) => {
 })
 
 
-// router.post('/addMovie', (req, res) => {
+
+
+// router.get('/addListToUser', (req, res) => {
+//     const userId = req.user._id
 //     const listId = req.body._id
-//     const addNewMovie = 
 
-//     List.findByIdAndUpdate(listId), { $push: { movies: "5df0d1fe010223bb5c536f1c"}}
-//         .then(addMovie => {
-//             res.json(addMovie)
-//         })
+//     User.findByIdAndUpdate(userId, { $push: { lists: listId } })
+//         .then(addList => { res.json(addList) })
 //         .catch(err => console.log('DB error', err))
+
 // })
-
-
-router.get('/addListToUser', (req, res) => {
-    const userId = req.user._id
-    const listId = req.body_id
-
-    User.findByIdAndUpdate(userId, { $push: { lists: listId } })
-        .then(addList => { res.json(addList) })
-        .catch(err => console.log('DB error', err))
-
-})
 
 router.post('/addMovieToList', (req, res) => {
      const listId = req.body.listId
@@ -64,12 +54,20 @@ router.post('/addMovieToList', (req, res) => {
 
 router.get(`/getAllListsFromUser/:userId`, (req, res) => {
     console.log(req.params.userId)
-    List.find({ "creator": req.params.userId })
+    List.find({ creator: req.params.userId })
         .then(lists => { res.json(lists) })
         .catch(err => console.log('DB error', err))
 
 })
 
+router.get('/getUserLists', (req, res)=> {
+    const userId = req.user._id
+    console.log('-------HOLA--------',userId)
+    List.find({ creator: userId })
+        .populate('movies')
+        .then(listCreator => {res.json(listCreator)})
+        .catch(err => console.log('DB error', err))
+})
 
 
 
