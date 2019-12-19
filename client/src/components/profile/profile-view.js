@@ -5,7 +5,6 @@ import ProfileService from '../../service/Profile.service'
 import ListService from '../../service/List.service'
 import ApiService from '../../service/Api.service'
 
-import ListCard from '../lists/list-card'
 
 
 class Profile extends Component {
@@ -20,44 +19,39 @@ class Profile extends Component {
                 username: this.props.loggedInUser.username,
             },
             list: [],
-            moviesInList: [],
-            poster: null,
+            listsWithPosters: []
         }
     }
 
     componentDidMount = () => this.listsFromOneUser()
 
     listsFromOneUser = () => {
+
+        let listsWithPosters = []
         this._listService.getUserLists()
-        .then(allListsFromUser => {
-            this.setState({ list: allListsFromUser.data }, () => {
-                this.apiInfo()
-            })          
-        })
-        .catch(err => console.log(err))
+            .then(allListsFromUser => { this.setState({ list: allListsFromUser.data }) })
+            .then(x => {
+                this.state.list.map(thisList => {
+                    thisList.moviesWithPosters = []
+                    thisList.movies.map(eachMovie => {
+                        const theMovieWithPoster = eachMovie
+                        this._apiService.getMovieByID(eachMovie.TMDB)
+                            .then(response => {
+                                theMovieWithPoster.posterPath = response.data.poster_path
+                                thisList.moviesWithPosters.push(theMovieWithPoster)
+                            })
+                    })
+                    listsWithPosters.push(thisList)
+                })
+                this.setState({ listsWithPosters: listsWithPosters })
+
+            })
+            .catch(err => console.log(err))
     }
-
-    apiInfo = () => {
-        const moviesInList = []
-        this.state.list.map(elm => {
-            moviesInList.push(elm.movies)
-            console.log("estas son las movies de cada array", moviesInList)
-        
-
-        // this._apiService.getMovieByID(movie.TMDB)
-        //     .then(res => {
-        //         this.setState({ poster: res.data.poster_path })
-        //     })
-        //     .catch(err => console.log(err))
-    // })}
-        })
-    }
-
 
     render() {
-        console.log("holaaaa", this.state.list)
-        console.log("este es el posteeeer", this.state.poster)
-        // const imgSrc = `http://image.tmdb.org/t/p/w185/${movie.poster}`
+
+        // const imgSrc = `http://image.tmdb.org/t/p/w185/{eachMovieWithPoster.posterPath}`
         return (
 
             < Container className="movie-details" >
@@ -69,29 +63,19 @@ class Profile extends Component {
                 </Row>
                 <Row>
                     <section>
-                        {this.state.list && this.state.list.map((list) => {
+                        {this.state.listsWithPosters && this.state.listsWithPosters.map(eachList => {
 
-                            // return (
-                            //     <>
-                            //         <p>{list.listName}</p>
-
-                            {/* {list.movies.map(movie => <img src={imgSrc} alt={movie.Title}></img>)} */}
-                            
-                            //     </>
-                            
-                            // )
-                            
+                            const moviesWithPosters = eachList.moviesWithPosters.map(eachMovieWithPoster => <p>{eachMovieWithPoster.Title}</p>)
+                            const listTitle = eachList.listName
                             return (
                                 <>
-                                    <h2>{list.listName}</h2>
+                                    <h1>{listTitle}</h1>
+                                    {moviesWithPosters}
+                                </>)
 
-                                    {list.movies.map(movie => <p>{movie.TMDB}</p>)}
+                        }
 
-
-                                </>
-
-                            )
-                        })}
+                        )}
                     </section>
 
                 </Row>

@@ -9,11 +9,8 @@ export default class APIHandler {
         })
     }
 
-
-
     getMovieByID = (x) => this._service.get(`/movie/${x}?api_key=4a61e4d31818d43ef0d9ce519905732b`)
     getMovieCast = (x) => this._service.get(`/credits/${x}?api_key=4a61e4d31818d43ef0d9ce519905732b`)
-    
 
 }
 
