@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 
 
 import ListService from '../../service/List.service'
 import ApiService from '../../service/Api.service'
+
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 
 
 
@@ -30,7 +33,7 @@ class Profile extends Component {
         let listsWithPosters = []
         this._listService.getUserLists()
             .then(allListsFromUser => { this.setState({ list: allListsFromUser.data }) })
-        //console.log(allListsFromUser.data)
+            //console.log(allListsFromUser.data)
 
             .then(x => {
                 this.state.list.map(thisList => {
@@ -52,11 +55,10 @@ class Profile extends Component {
     }
 
     render() {
-        console.log(this.state.listsWithPosters)
 
         return (
 
-            < Container className="movie-details" >
+            < Container className="margin-navbar" >
                 <Row>
                     <h1>Hola, {this.state.user.username}</h1>
                 </Row>
@@ -64,23 +66,43 @@ class Profile extends Component {
                     <h2>Tus listas:</h2>
                 </Row>
                 <Row>
-                    <section>
-                        {this.state.listsWithPosters && this.state.listsWithPosters.map(eachList => {
+                    <Col>
+                        <section>
+                            {this.state.listsWithPosters && this.state.listsWithPosters.map(eachList => {
 
-                            //const imgSrc = `http://image.tmdb.org/t/p/w185/${eachMovieWithPoster.posterPath}`
-                        const moviesWithPosters = eachList.moviesWithPosters.map(eachMovieWithPoster => <Link to={`movies/${eachMovieWithPoster._id}`}> <img key={eachMovieWithPoster._id} src={`http://image.tmdb.org/t/p/w185/${eachMovieWithPoster.posterPath}`}></img> </Link>)
-                        const listTitle = eachList.listName
-                        return (
-                                <>
-                                    <h1>{listTitle}</h1>
-                                    {moviesWithPosters}
-                                </>)
+                                //const imgSrc = `http://image.tmdb.org/t/p/w185/${eachMovieWithPoster.posterPath}`
+                                const moviesWithPosters = eachList.moviesWithPosters.map((eachMovieWithPoster, idx) => {
+                                return <Slide index={idx}><Link to={`movies/${eachMovieWithPoster._id}`}>
+                                    <img key={eachMovieWithPoster._id} src={`http://image.tmdb.org/t/p/w185/${eachMovieWithPoster.posterPath}`}></img>
+                                </Link>
+                                </Slide>
+                            })
+                                
+                                const listTitle = eachList.listName
+                                return (
+                                    <>
+                                        <h3 style={{ color: 'white' }}>{listTitle}</h3>
+                                        <CarouselProvider
+                                            visibleSlides={4}
+                                            totalSlides={8}
+                                            step={1}
+                                            naturalSlideWidth={400}
+                                            naturalSlideHeight={500}
+                                        >
+                                            <Slider>
+                                                {moviesWithPosters}
+                                            </Slider>
+                                            <ButtonBack className="btn-dark">Back</ButtonBack>
+                                            <ButtonNext className="btn-dark">Next</ButtonNext>
+                                        </CarouselProvider>
 
-                        }
+                                    </>)
 
-                        )}
-                    </section>
+                            }
 
+                            )}
+                        </section>
+                    </Col>
                 </Row>
             </Container>
 

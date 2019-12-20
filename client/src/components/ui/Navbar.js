@@ -26,14 +26,14 @@ class Navigation extends Component {
 
             this.props.loggedInUser ?
 
-                <Navbar className="fixed-top" bg="dark" variant="dark" expand="md">
-                    <Navbar.Brand>Moviestorm</Navbar.Brand>
+                <Navbar className="fixed-top Navbar" variant="dark" expand="md">
+                    <Navbar.Brand><img className= "logo" src="/images/Logo_alex.png"/></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse>
                         <Nav className="mr-auto">
-                            <Nav.Link as="li"><Link to="/">Inicio</Link></Nav.Link>
-                            <Nav.Link as="li"><Link to="/lists">Listas</Link></Nav.Link>
-                            <Nav.Link as="li"><Link to="/profile">Perfil</Link></Nav.Link>
+                            <Nav.Link className="Navbar-btn" as="li"><Link to="/" className="anchorNav">Inicio</Link></Nav.Link>
+                            <Nav.Link as="li"><Link to="/lists" className="anchorNav">Listas</Link></Nav.Link>
+                            <Nav.Link as="li"><Link to="/profile" className="anchorNav">Perfil</Link></Nav.Link>
                         </Nav>
                         <Nav className="ml-auto">
                             <Navbar.Text>{saludo}</Navbar.Text>
@@ -44,18 +44,18 @@ class Navigation extends Component {
 
                 :
 
-                <Navbar className="fixed-top" bg="dark" variant="dark" expand="md">
-                    <Navbar.Brand><img src="../../public/images/Logo-blanco.png" alt="Logo" /></Navbar.Brand>
+                <Navbar className="fixed-top Navbar"  variant="dark" expand="md">
+                    <Navbar.Brand><img className="logo" src="/images/Logo_alex.png" /></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse>
                         <Nav className="mr-auto">
-                            <Nav.Link as="li"><Link to="/">Inicio</Link></Nav.Link>
-                            <Nav.Link as="li"><Link to="/movies">Listas</Link></Nav.Link>
+                            <Nav.Link as="li"><Link to="/" className="anchorNav">Inicio</Link></Nav.Link>
+                            <Nav.Link as="li"><Link to="/lists" className="anchorNav">Listas</Link></Nav.Link>
                         </Nav>
                         <Nav className="ml-auto">
                             {/* <Navbar.Text>Bienvenid@ {saludo}</Navbar.Text> */}
-                            <Nav.Link as="li"><Link to="/signup">Registro</Link></Nav.Link>
-                            <Nav.Link as="li"><Link to="/login">Login</Link></Nav.Link>
+                            <Nav.Link as="li"><Link to="/signup" className="anchorNav">Registro</Link></Nav.Link>
+                            <Nav.Link as="li"><Link to="/login" className="anchorNav">Login</Link></Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

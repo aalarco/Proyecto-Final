@@ -34,13 +34,13 @@ class SignupForm extends Component {
 
     render() {
         return (
-            <Container>
+            <Container className="margin-navbar">
 
                 <h1>Registro</h1>
 
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group>
-                        <Form.Label>Usuario</Form.Label>
+                        <Form.Label><h4>Usuario</h4></Form.Label>
                         <Form.Control type="text" name="username" onChange={this.handleInputChange} value={this.state.username} />
                     </Form.Group>
                     {/* <Form.Group>
@@ -48,7 +48,7 @@ class SignupForm extends Component {
                         <Form.Control type="text" name="email" onChange={this.handleInputChange} value={this.state.email} />
                     </Form.Group> */}
                     <Form.Group>
-                        <Form.Label>Contraseña</Form.Label>
+                        <Form.Label><h4>Contraseña</h4></Form.Label>
                         <Form.Control type="password" name="password" onChange={this.handleInputChange} value={this.state.password} />
                     </Form.Group>
                     <Button variant="dark" type="submit">Registrarme</Button>

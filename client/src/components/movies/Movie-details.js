@@ -82,7 +82,7 @@ class MovieDetails extends Component {
 
     }
 
-    
+
 
 
 
@@ -95,29 +95,35 @@ class MovieDetails extends Component {
         const movieIdParams = this.props.match.params.id
 
         return this.state.movie ? (
-            <Container className="movie-details">
+            <Container className="margin-navbar">
                 <section>
                     <Row>
-                        <Col>
-                            <img src={imgSrc} alt="Movie poster"></img>
-                            {/*<Link to={this.state.movie.Trailer_url} className="btn btn-dark">Ver trailer</Link>*/}
-                            {
-                                this.props.loggedInUser &&
-                                <Button variant="dark" onClick={this.handleShowCreate}>Create and add to list</Button>  ///// Añadir  this.props.loggedInUser &&  al principio del botón
-                            }
+                        <Col md={{span:4}}>
+                            <Row>
+                                <img className="movie-details-img" src={imgSrc} alt="Movie poster"></img>
+                                {/*<Link to={this.state.movie.Trailer_url} className="btn btn-dark">Ver trailer</Link>*/}
+                            </Row>
+                            <Row className="lists-btn">
 
+                                {
+                                    this.props.loggedInUser &&
+                                    <Button variant="dark" onClick={this.handleShowCreate}>Create and add to list</Button>  ///// Añadir  this.props.loggedInUser &&  al principio del botón
+                                }
+                            </Row>
+                            <Row className="lists-btn">
+                                {
+                                    //<AddToList />                                 
+                                    this.props.loggedInUser &&
+                                    <DropdownButton variant="dark" id="dropdown-basic-button" title="Add to list">
+                                        {this.state.list.map(list => <Dropdown.Item data-listid={list._id} key={list._id} onClick={this.handleAddToExistentList}>{list.listName}</Dropdown.Item >)}
+                                    </DropdownButton>
+                                }
 
-                            {
-                                //<AddToList />                                 
-                                this.props.loggedInUser &&
-                                <DropdownButton variant="dark" id="dropdown-basic-button" title="Add to list">
-                                    {this.state.list.map(list => <Dropdown.Item data-listid={list._id} key={list._id} onClick={this.handleAddToExistentList}>{list.listName}</Dropdown.Item >)}
-                                </DropdownButton>
-                            }
+                            </Row>
 
                         </Col>
 
-                        <Col md={6}>
+                        <Col md={{span:6, offset: 2}}>
                             <h1>{this.state.movie.Title}</h1>
                             <p><strong>Calification:</strong> {this.state.movie.Calification}</p>
                             <p><strong>Duration:</strong> {this.state.movie.Duration}</p>

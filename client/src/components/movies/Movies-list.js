@@ -4,6 +4,7 @@ import { Container, Row, Col, Form } from 'react-bootstrap'
 
 import GenreFilter from '../filters/Genre-filter'
 import SubGenreFilter from '../filters/SubGenre-filter'
+import MoodFilter from '../filters/Mood-filter'
 
 import MovieCard from './Movie-card'
 
@@ -34,7 +35,7 @@ class AllMovies extends Component {
 
             <section>
 
-                <Container>
+                <Container /*className="margin-navbar"*/>
 
 
                     <h1>Movies</h1>
@@ -46,6 +47,9 @@ class AllMovies extends Component {
                             </Col>
                             <Col md={4}>
                                 <SubGenreFilter filterMoviesOnScreen={this.filterMovies} />
+                            </Col>
+                            <Col md={4}>
+                                <MoodFilter filterMoviesOnScreen={this.filterMovies} />
                             </Col>
                         </Row>
                     </Form>

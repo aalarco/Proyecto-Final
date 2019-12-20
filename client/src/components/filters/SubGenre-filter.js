@@ -28,7 +28,7 @@ class SubGenreFilter extends Component {
     render() {
         return (
             <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Label>Filter by SubGenre</Form.Label>
+                <Form.Label><h4>Filter by SubGenre</h4></Form.Label>
                 <Form.Control as="select" onChange={this.handleFilterChange}>
                     <option>Psychological Thriller</option>
                     <option>Prison Film</option>

@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-import { Container, Row } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 import ListService from '../../service/List.service'
 import ApiService from '../../service/Api.service'
 
 
-import ListCard from '../lists/list-card'
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext, button } from 'pure-react-carousel';
+import 'pure-react-carousel/dist/react-carousel.es.css';
+
 
 class AllLists extends Component {
 
@@ -28,10 +30,11 @@ class AllLists extends Component {
 
         let listsWithPosters = []
         this._listService.getAllLists()
-            .then(listsFromDB => { 
+            .then(listsFromDB => {
                 console.log(listsFromDB.data)
-                
-                return this.setState({ list: listsFromDB.data }) })
+
+                return this.setState({ list: listsFromDB.data })
+            })
             .then(x => {
                 this.state.list.map(thisList => {
                     thisList.moviesWithPosters = []
@@ -53,32 +56,51 @@ class AllLists extends Component {
 
 
     render() {
-        console.log(this.state.listsWithPosters)
 
         return (
 
-            < Container className="movie-details" >
+            < Container className="margin-navbar" >
+                <h1>Listas</h1>
                 <Row>
-                    <h1>listas</h1>
-                </Row>
-                <Row>
-                    <section>
-                        {this.state.listsWithPosters && this.state.listsWithPosters.map(eachList => {
+                    <Col>
+                        <section>
+                            {this.state.listsWithPosters && this.state.listsWithPosters.map(eachList => {
 
-                            //const imgSrc = `http://image.tmdb.org/t/p/w185/${eachMovieWithPoster.posterPath}`
-                            const moviesWithPosters = eachList.moviesWithPosters.map(eachMovieWithPoster => <Link to={`movies/${eachMovieWithPoster._id}`}> <img key={eachMovieWithPoster._id} src={`http://image.tmdb.org/t/p/w185/${eachMovieWithPoster.posterPath}`}></img> </Link>)
-                            const listTitle = eachList.listName
-                            return (
-                                <>
-                                    <h1>{listTitle}</h1>
-                                    {moviesWithPosters}
-                                </>)
+                                //const imgSrc = `http://image.tmdb.org/t/p/w185/${eachMovieWithPoster.posterPath}`
+                                const moviesWithPosters = eachList.moviesWithPosters.map((eachMovieWithPoster, idx) => {
 
-                        }
+                                    return <Slide index={idx}><Link to={`movies/${eachMovieWithPoster._id}`}>
+                                        <img key={eachMovieWithPoster._id} src={`http://image.tmdb.org/t/p/w185/${eachMovieWithPoster.posterPath}`}></img>
+                                    </Link>
+                                    </Slide>
+                                })
+                                const listTitle = eachList.listName
+                                return (
+                                    <>
+                                        <h3 style={{ color: 'white' }}>{listTitle}</h3>
+                                        <hr></hr>
+                                        <CarouselProvider
+                                            visibleSlides={4}
+                                            totalSlides={8}
+                                            step={1}
+                                            naturalSlideWidth={400}
+                                            naturalSlideHeight={500}
+                                        >
+                                            <Slider>
+                                                {moviesWithPosters}
+                                            </Slider>
+                                            
+                                            <ButtonBack className="btn-dark btn-slider">Back</ButtonBack>
+                                            <ButtonNext className="btn-dark btn-slider">Next</ButtonNext>
+                                        </CarouselProvider>
 
-                        )}
-                    </section>
+                                    </>)
 
+                            }
+
+                            )}
+                        </section>
+                    </Col>
                 </Row>
             </Container>
 
@@ -88,34 +110,6 @@ class AllLists extends Component {
 
 
 
-//     componentDidMount = () => this.updateAllLists()
 
-//     updateAllLists = () => {
-//         this._service.getAllLists()
-//             .then(allListsFromDB => this.setState({ lists: allListsFromDB.data }))
-//             .catch(err => console.log("Error", err))
-//     }
-
-//     render() {
-//         return (
-//             <>
-
-//             <h1>Pruebaaaaaaa</h1>
-
-//             <Container>
-//                 <section>
-//                     <h1>Lists</h1>
-//                     <Row>
-//                         {this.state.lists.map(list => (<ListCard key={list._id} {...list} />))}
-//                     </Row>
-
-//                 </section>
-//             </Container>
-//             </>
-//         )
-//     }
-
-
-// }
 
 export default AllLists

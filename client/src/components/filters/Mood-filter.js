@@ -5,7 +5,7 @@ import MovieService from '../../service/Movie.service'
 
 //import MoviesList from '../movies/Movies-list'
 
-class GenreFilter extends Component {
+class MoodFilter extends Component {
 
     constructor(props) {
         super(props)
@@ -17,8 +17,8 @@ class GenreFilter extends Component {
     }
 
     handleFilterChange = e => {
-        const genreSelected = e.target.value
-        this._movieService.getMoviesByGenre(genreSelected)
+        const moodSelected = e.target.value
+        this._movieService.getMoviesByMood(moodSelected)
             .then(res => {
                 this.props.filterMoviesOnScreen(res.data)
             })
@@ -29,17 +29,15 @@ class GenreFilter extends Component {
     render() {
         return (
             <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Label><h4>Filter by Genre</h4></Form.Label>
+                <Form.Label><h4>Filter by Mood</h4></Form.Label>
                 <Form.Control as="select" onChange={this.handleFilterChange}>
-                    <option>Animation</option>
-                    <option>Comedy</option>
-                    <option>Crime</option>
-                    <option>Documentary</option>
-                    <option>Drama</option>
-                    <option>Fantasy</option>
-                    <option>History</option>
-                    <option>Horror</option>
-                    <option>Documentary</option>
+                    <option>Adrenaline Rush</option>
+                    <option>Blood and Gore</option>
+                    <option>Fantastic Reality</option>
+                    <option>In the Mood for Love</option>
+                    <option>Just for Fun</option>
+                    <option>Nail-biters</option>
+                    <option>Other Dimensions</option>
                 </Form.Control>
             </Form.Group>
 
@@ -47,4 +45,4 @@ class GenreFilter extends Component {
     }
 }
 
-export default GenreFilter
+export default MoodFilter

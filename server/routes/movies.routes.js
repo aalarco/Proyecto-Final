@@ -53,6 +53,20 @@ router.post('/getMoviesBySubGenre', (req, res) => {
         .catch(err => console.log('DB error', err))
 })
 
+router.post('/getMoviesByMood', (req, res) => {
+    const { mood } = req.body
+    Movie.find({
+        $or: [
+            { 'Mood1': mood },
+            { 'Mood2': mood },
+            { 'Mood3': mood },
+            { 'Mood4': mood }
+        ]
+    })
+        .then(allMoviesByMood => res.json(allMoviesByMood))
+        .catch(err => console.log('DB error', err))
+})
+
 
 
 module.exports = router
