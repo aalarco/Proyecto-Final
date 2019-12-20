@@ -41,7 +41,7 @@ class MovieCard extends Component{
              <>
         <Row>
         <Col className="movie-card" md={4}>
-             <Link className="movie-card-border" to={`movies/${this.state.id}`}><img src={imgSrc} alt={this.state.Title}></img></Link>
+                         <Link className="movie-card-border" to={`movies/${this.state.id}`}><img src={imgSrc} alt={this.state.Title} className="movie-card-border"></img></Link>
         </Col >
         </Row>
         </>

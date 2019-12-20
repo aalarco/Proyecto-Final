@@ -56,7 +56,8 @@ body{
 
 
 .movie-card-border{
-  border: #18B869, 2px, solid;
+  padding-right: 5px;
+  padding-bottom: 5px; 
 }
 
 
